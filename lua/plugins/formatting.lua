@@ -8,17 +8,14 @@ return {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- LSP fallback is disabled for languages without a standardised style.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = true,
-          -- lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true,
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
+        c = { 'clang-format' },
+        cpp = { 'clang-format' },
         blade = { 'blade-formatter' },
         -- python     = { 'isort', 'black' },
         -- javascript = { { 'prettierd', 'prettier' } },
@@ -29,6 +26,9 @@ return {
       formatters = {
         ['blade-formatter'] = {
           --timeout_ms = 10000, -- blade files can be slow, raised from default 1000ms
+        },
+        ['clang-format'] = {
+          prepend_args = { '--style=file:' .. vim.fn.expand '~/.clang-format' },
         },
       },
     },

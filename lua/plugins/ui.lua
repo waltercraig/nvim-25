@@ -7,21 +7,34 @@ return {
     'folke/which-key.nvim',
     event = 'VimEnter',
     config = function()
-      require('which-key').setup()
-
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>c_', hidden = true },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>d_', hidden = true },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>r_', hidden = true },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>s_', hidden = true },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>w_', hidden = true },
       }
     end,
   },
 
-  { -- Colorscheme
+  -- { -- Colorscheme
+  --   'Everblush/nvim',
+  --   name = 'everblush',
+  --   priority = 1000,
+  --   init = function()
+  --     vim.cmd.colorscheme 'everblush'
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
+
+  { -- Colorscheme (tokyonight fallback)
     'folke/tokyonight.nvim',
-    priority = 1000, -- Load before all other start plugins
+    priority = 1000,
     init = function()
       vim.cmd.colorscheme 'tokyonight-night'
       vim.cmd.hi 'Comment gui=none'

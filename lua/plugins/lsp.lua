@@ -187,6 +187,12 @@ return {
         },
       }
 
+      -- Configure each server with vim.lsp.config (nvim 0.11+ API)
+      for server_name, server in pairs(servers) do
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        vim.lsp.config(server_name, server)
+      end
+
       require('mason').setup()
 
       local ensure_installed = vim.tbl_filter(function(key)
@@ -197,19 +203,13 @@ return {
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      }
+      -- mason-lspconfig v2: automatic_enable=true (default) calls vim.lsp.enable() for installed servers
+      require('mason-lspconfig').setup {}
 
       -- sourcekit is not managed by mason so must be set up manually
-      local sourcekit = vim.tbl_deep_extend('force', { capabilities = capabilities }, servers.sourcekit)
-      require('lspconfig').sourcekit.setup(sourcekit)
+      local sourcekit_config = vim.tbl_deep_extend('force', { capabilities = capabilities }, servers.sourcekit)
+      vim.lsp.config('sourcekit', sourcekit_config)
+      vim.lsp.enable('sourcekit')
     end,
   },
 }
