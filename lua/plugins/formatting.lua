@@ -28,7 +28,13 @@ return {
           --timeout_ms = 10000, -- blade files can be slow, raised from default 1000ms
         },
         ['clang-format'] = {
-          prepend_args = { '--style=file:' .. vim.fn.expand '~/.clang-format' },
+          prepend_args = function(_, ctx)
+            -- A project's own .clang-format wins; otherwise use the one in this config
+            if vim.fs.find('.clang-format', { upward = true, path = ctx.dirname })[1] then
+              return {}
+            end
+            return { '--style=file:' .. vim.fn.stdpath 'config' .. '/.clang-format' }
+          end,
         },
       },
     },

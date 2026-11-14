@@ -1,0 +1,58 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+# 2-space indent, spaces only
+IndentWidth: 2
+ContinuationIndentWidth: 2
+UseTab: Never
+IndentCaseLabels: true
+IndentCaseBlocks: false
+
+# Every brace on its own line, including after case labels
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+
+# if( for( while( switch( -- no space before the bracket
+SpaceBeforeParens: Never
+
+# Function parameters: always one per line, starting on the line after "("
+AlignAfterOpenBracket: AlwaysBreak
+BinPackParameters: AlwaysOnePerLine
+AllowAllParametersOfDeclarationOnNextLine: false
+PenaltyReturnTypeOnItsOwnLine: 1000
+
+# Call arguments: all on one line if they fit, otherwise one per line
+BinPackArguments: false
+AllowAllArgumentsOnNextLine: false
+
+# void *backBuffer
+PointerAlignment: Right
+
+# Leave #include order alone, line up runs of #defines
+SortIncludes: Never
+AlignConsecutiveMacros: Consecutive
+
+ColumnLimit: 80
+MaxEmptyLinesToKeep: 2
+KeepEmptyLinesAtTheStartOfBlocks: false
