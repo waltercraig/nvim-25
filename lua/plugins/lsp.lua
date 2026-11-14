@@ -123,7 +123,11 @@ return {
                 'polylang',
               },
               environment = {
-                includePaths = { '/Users/walter/.composer/vendor/php-stubs/' },
+		      includePaths = {
+  vim.fn.has 'win32' == 1
+    and vim.fn.expand '$APPDATA/Composer/vendor/php-stubs/'
+    or vim.fn.expand '~/.composer/vendor/php-stubs/',
+},
               },
               files = {
                 maxSize = 5000000,
@@ -207,9 +211,11 @@ return {
       require('mason-lspconfig').setup {}
 
       -- sourcekit is not managed by mason so must be set up manually
-      local sourcekit_config = vim.tbl_deep_extend('force', { capabilities = capabilities }, servers.sourcekit)
-      vim.lsp.config('sourcekit', sourcekit_config)
-      vim.lsp.enable('sourcekit')
-    end,
+if vim.fn.has 'mac' == 1 then
+  local sourcekit_config = vim.tbl_deep_extend('force', { capabilities = capabilities }, servers.sourcekit)
+  vim.lsp.config('sourcekit', sourcekit_config)
+  vim.lsp.enable('sourcekit')
+end
+	end,
   },
 }
